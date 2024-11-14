@@ -15,7 +15,7 @@ Com[A_, B_] := A.B - B.A;
 
 (* Construct the real space Hamiltonian for a system specified by the on-site matrix M and the hopping matrix J 
 for Nsites unit cells. The optional boolean argument pbc sets the periodic/open boundary conditions. *)
-ConstructRealSpaceHlt[J_, M_, Nsites_,pbc_:False] := Module[ {Elist, h, Htemp, H,step, LH},
+ConstructRealSpaceHlt[J_, M_, Nsites_,pbc_:False] := Module[ {Htemp},
 	Htemp = Table[ J\[ConjugateTranspose]KroneckerDelta[i+1,j] + J  KroneckerDelta[i,j+1]+M KroneckerDelta[i,j],{i,Nsites},{j,Nsites}];
 	If[pbc, 
 		Htemp[[Nsites, 1]]+=J\[ConjugateTranspose]; 
@@ -37,7 +37,7 @@ If the overall system is periodic, then the number of interfaces is equal to the
 systems. Thus, if IMlist and Mlist are of equal length, the system is assumed to have periodic boundary
 conditions, and open boundary conditions otherwise.  *)
 ConstructGenInterfaceHlt[Jlist_, Mlist_, IJLlist_, IJRlist_, IMlist_, Nlist_] := Module[
-{Nsys, pbc, \[CurlyEpsilon]list, h, Htemp, Hblock, JSize, MSize, IJLSize, IJRSize, IMSize, Sz, JLpad, JRpad, PadArrL, PadArrR, Ran, i},
+{Nsys, pbc, Htemp, Hblock, JSize, MSize, IJLSize, IJRSize, IMSize, Sz, JLpad, JRpad, PadArrL, PadArrR, Ran, i},
 
 	Nsys = Dimensions[Mlist][[1]];   (* Number of systems *) 
 	pbc = Dimensions[IMlist][[1]] - Nsys; 
